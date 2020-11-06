@@ -85,33 +85,19 @@ background: radial-gradient(ellipse at center,  #d60202 1%,#5a1c1c 100%);">
 								<div class="form-group">
 									<label valign="top">Kecamatan <span class="text-danger font-weight-bold">*</span></label>
 									<select class="form-control select2 nama_kecamatan" name="kecamatan" id='kecamatan' required>
-                           <!-- <option>Pilih Kecamatan</option> -->
-                          
-                           <!-- isi -->
-
 		                     </select>
                         </div>
                         <div class="form-group">
                            <label valign="top">Desa Kelurahan <span class="text-danger font-weight-bold">*</span></label>
                            <select class="form-control select2 nama_desa_kelurahan" name="desa_kelurahan" id='desa_kelurahan' required>
-                           <!-- <option>Pilih Kelurahan</option> -->
-
-
-                          <!-- isi -->
 
 
                            </select>
                         </div>
                         <div class="form-group">
                            <label valign="top">Kode POS <span class="text-danger font-weight-bold">*</span></label>
-                           <select class="form-control select2 kodepos" readonly name="kodepos_id" id="kodepos_id" required>
-                              <!-- <input type="text" name="kodepos_id" id="kodepos_id" class="form-control" readonly required> -->
-
-
-                          <!-- isi -->		
-
-
-                           </select>
+                           <input type="text" name="kodepos_id" class="form-control" id="kodepos_id"  required hidden>
+                           <input type="text" name="kodepos_name" class="form-control kodepos_name" id="kodepos_name" required readonly>
                         </div>
                         <div class="form-group">
                            <label valign="top">Alamat <span class="text-danger font-weight-bold">*</span></label>
@@ -152,10 +138,8 @@ background: radial-gradient(ellipse at center,  #d60202 1%,#5a1c1c 100%);">
                         <input class="form-control-file"
                         type="file" name="foto_ktp" placeholder="" data-validation="mime size required" data-validation-allowing="jpg, png"  data-validation-error-msg-required="Tidak ada gambar yang dipilih">
                      </div>
-                        <span class="btn btn-secondary mb-3" onclick="stepperForm.previous()">Previous</span>
-                        <a id="set_dtl" class="btn btn-success mb-3"  onclick="test()" ><i class="fas fa-eye"></i>Lihat data</a>
-                        <button type="submit" class="btn btn-danger btn-next-form float-right mb-3" id="register">Submit</button> <br>
-                        <span><small class="font-weight-bold">*Jika Tombol Submit Tidak Bisa , Klik lihat data , apakah data sudah terisi semua atau belum</small> </span>
+                        <span class="btn btn-secondary" onclick="stepperForm.previous()">Previous</span>
+                        <button type="button" class="btn btn-danger btn-next-form " id="submitBtn" data-toggle="modal" data-target="#confirm-submit">Submit</button> <br>
                      </div>
                   </form>
                </div>
@@ -164,78 +148,73 @@ background: radial-gradient(ellipse at center,  #d60202 1%,#5a1c1c 100%);">
       </div>
 
 
-      <div class="modal fade" id="modal-detail">
+
+      <div class="modal fade" id="confirm-submit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
          <div class="modal-dialog">
             <div class="modal-content">
-            <div class="modal-header">
-               <h5 class="modal-title" id="exampleModalLabel">Detail</h5>
-               <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span>
-               </button>
-            </div>
-            
-            <div class="modal-body table-responsive">
-                  <table class="table table-bordered no-margin">
-                  <tbody>
+                  <div class="modal-header">
+                     <h4> Confirm Submit</h4>
+                  </div>
+                  <div class="modal-body">
+                     <table class="table">
                      <tr>
                         <th>NO. INDIHOME</th>
                         <td><span id="no_indihome_modal"></span></td>
                      </tr>
                      <tr>
                         <th>NO. TELEPON</th>
-                        <td><span id="no_telepon"></span></td>
+                        <td><span id="no_telepon_modal"></span></td>
                      </tr>
                      <tr>
                         <th>NAMA LENGKAP</th>
-                        <td><span id="nama_lengkap"></span></td>
+                        <td><span id="nama_lengkap_modal"></span></td>
                      </tr>
                      <tr>
                         <th>KOTA KABUPATEN</th>
-                        <td><span id="nama_kota_kabupaten"></span></td>
+                        <td><span id="nama_kota_kabupaten_modal"></span></td>
                      </tr>
                      <tr>
                         <th>KECAMATAN</th>
-                        <td><span id="nama_kecamatan"></span></td>
+                        <td><span id="nama_kecamatan_modal"></span></td>
                      </tr>
                      <tr>
                         <th>DESA KELURAHAN</th>
-                        <td><span id="nama_desa_kelurahan"></span></td>
+                        <td><span id="nama_desa_kelurahan_modal"></span></td>
                      </tr>
                      <tr>
                         <th>ALAMAT</th>
-                        <td><span id="alamat"></span></td>
+                        <td><span id="alamat_modal"></span></td>
                      </tr>
                      <tr>
                         <th>KODE POS</th>
-                        <td><span id="kodepos"></span></td>
+                        <td><span id="kodepos_modal"></span></td>
                      </tr>
                      <tr>
                         <th>NO. HANDPHONE</th>
-                        <td><span id="no_handphone"></span></td>
+                        <td><span id="no_handphone_modal"></span></td>
                      </tr>
                      <tr>
                         <th>EMAIL</th>
-                        <td><span id="email"></span></td>
+                        <td><span id="email_modal"></span></td>
                      </tr>
                      <tr>
                         <th>PEKERJAAN</th>
-                        <td><span id="nama_pekerjaan"></span></td>
+                        <td><span id="nama_pekerjaan_modal"></span></td>
                      </tr>
                      <tr>
                         <th>No KTP</th>
-                        <td><span id="ktp_id"></span></td>
+                        <td><span id="no_ktp_modal"></span></td>
                      </tr>
-                     <tr>
+                     <!-- <tr>
                         <th>Foto KTP</th>
                         <td><span id="image"></span></td>
-                     </tr>
-                  </tbody>
-                  </table>
-            </div>
-            <div class="modal-footer">
-            <button type="submit" class="btn btn-danger btn-next-form" id="register">Submit</button>
-               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+                     </tr> -->
+                     </table>
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                     <a href="#" id="submit" class="btn btn-success success">Submit</a>
+                  </div>
             </div>
          </div>
       </div>
@@ -334,12 +313,17 @@ background: radial-gradient(ellipse at center,  #d60202 1%,#5a1c1c 100%);">
                      dataType : 'json',
                      success: function(data){
                         
-                        var html = '';
+                        var valueid = '';
+                        var valuename = '';
                         var i;
                         for(i=0; i<data.length; i++){
-                              html += '<option value='+data[i].id+'>'+data[i].kodepos+'</option>';
+                              valueid+=data[i].id;
+                              valuename+=data[i].kodepos;
+                           
+                              // html += '<option value='+data[i].id+'>'+data[i].kodepos+'</option>';
                         }
-                        $('#kodepos_id').html(html);
+                        $('#kodepos_id').val(valueid);
+                        $('#kodepos_name').val(valuename);
                      }
                   });
                   return false;
@@ -358,7 +342,6 @@ background: radial-gradient(ellipse at center,  #d60202 1%,#5a1c1c 100%);">
          }));
       </script>
       <script>
-
          function test(){
             var no_indihome = $('.no_indihome').val();
             var no_telepon = $('.no_telepon').val();
@@ -387,6 +370,29 @@ background: radial-gradient(ellipse at center,  #d60202 1%,#5a1c1c 100%);">
                   );
 
          }
+      </script>
+      <script>
+         $('#submitBtn').click(function() {
+            // $('#lname').text($('#lastname').val());
+            // $('#fname').text($('#firstname').val());
+            $('#no_indihome_modal').val($('.no_indihome').text());
+            $('#no_indihome_modal').text($('.no_indihome').val());
+            $('#no_telepon_modal').text($('.no_telepon').val());
+            $('#nama_lengkap_modal').text($('.nama_lengkap').val());
+            $('#nama_kota_kabupaten_modal').text($('.nama_kota_kabupaten option:selected').text());
+            $('#nama_kecamatan_modal').text($('.nama_kecamatan option:selected').text());
+            $('#nama_desa_kelurahan_modal').text($('.nama_desa_kelurahan option:selected').text());
+            $('#alamat_modal').text($('.alamat').val());
+            $('#kodepos_modal').text($('.kodepos_name').val());
+            $('#email_modal').text($('.email').val());
+            $('#no_handphone_modal').text($('.no_handphone').val());
+            $('#nama_pekerjaan_modal').text($('.nama_pekerjaan option:selected').text());
+            $('#no_ktp_modal').text($('.no_ktp').val());
+         });
+
+         $('#submit').click(function(){
+            $('#register_form').submit();
+         });
       </script>
       <script>
          function hanyaAngka(evt) {
