@@ -24,8 +24,8 @@
           <div id="login">
             <form method="post" action="<?php echo base_url(); ?>Login_user/cekPelanggan">
               <fieldset class="clearfix">
-                <p ><span class="fa fa-user"></span><input type="text" name="no_indihome" id="username" Placeholder="Nomor Indihome" required></p> 
-                <p ><span class="fa fa-user"></span><input type="text" name="no_ktp" id="username" Placeholder="Nomor KTP" required></p> 
+                <p ><span class="fa fa-user"></span><input type="text" name="no_indihome" id="username" Placeholder="Nomor Indihome" maxlength="12" required></p> 
+                <p ><span class="fa fa-user"></span><input type="text" name="no_ktp" id="username" Placeholder="Nomor KTP" maxlength="16" required></p> 
                 <p><span> <?php echo $this->session->flashdata('pesan'); ?></span></p>
                 <div>
                     <!-- <span style="width:48%; text-align:left;  display: inline-block;"><a class="small-text" href="#">Forgot

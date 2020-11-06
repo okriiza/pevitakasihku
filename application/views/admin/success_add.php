@@ -44,7 +44,7 @@ background: radial-gradient(ellipse at center,  #d60202 1%,#5a1c1c 100%);">
 //     window.location="<?php echo base_url()?>";
 // }, 5);
 
-setTimeout(window.location="<?php echo base_url() ?>",10000);
+// setTimeout(window.location="<?php echo base_url() ?>",10000);
 </script>
 </body>
 </html>
