@@ -25,7 +25,7 @@ background: -webkit-radial-gradient(center, ellipse cover,  #d60202 1%,#5a1c1c 1
 background: -o-radial-gradient(center, ellipse cover,  #d60202 1%,#5a1c1c 100%); /* Opera 12+ */
 background: -ms-radial-gradient(center, ellipse cover,  #d60202 1%,#5a1c1c 100%); /* IE10+ */
 background: radial-gradient(ellipse at center,  #d60202 1%,#5a1c1c 100%);">
-   <?php echo $this->session->flashdata('pesan'); ?>
+   <!-- <?php echo $this->session->flashdata('pesan'); ?> -->
       <div class="container flex-grow-1 flex-shrink-0 py-5">
          <div class="card mb-5 p-4 bg-white shadow-sm">
             <div class="d-flex justify-content-between">
