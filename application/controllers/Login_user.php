@@ -43,7 +43,8 @@ class Login_user extends CI_Controller {
     
         if ($tersedia_indihome>0 && $tersedia_ktp>0 ) {
             $sess = array(
-				'no_indihome' => $no_indihome,
+                'no_indihome' => $no_indihome,
+                'no_ktp' => $no_ktp,
 				'status' => 'login'
 			);
 			$this->session->set_userdata($sess);

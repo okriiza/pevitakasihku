@@ -1,5 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+
+$id_pelanggan =$this->input->post('id');
+$no_indihome = $this->input->post('no_indihome');
+
+$nilai = $this->db->query("SELECT pelanggan.id AS id_pelanggan,no_indihome,no_telepon,nama_lengkap, kota_kabupaten_id,kecamatan_id,desa_kelurahan_id,alamat,kodepos_id,no_handphone,email,pekerjaan_id,ktp_id, kartu_tanda_penduduk.id,no_ktp,image FROM pelanggan JOIN kartu_tanda_penduduk ON pelanggan.ktp_id = kartu_tanda_penduduk.id WHERE no_indihome = '" . $no_indihome . "'")->result_array();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -125,8 +130,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									<?php echo form_error('pekerjaan') ?>
 								</div>
 							</div>
-							<?php if($row->id == $Pelanggan->pekerjaan_id) echo 'selected' ;?>
-
+							<!-- <?php if($row->id == $Pelanggan->pekerjaan_id) echo 'selected' ;?> -->
+							
+							<div class="form-group">
+							<label valign="top">Nomor KTP</label>
+								<input type="text" hidden name="ktp_id" value="<?php echo $Pelanggan->ktp_id?>">
+								<?php  foreach($get_ktp as $row):?>
+									<?php if($row->id == $Pelanggan->ktp_id){?>
+										<!-- <input type="text" name="ktp_id" value="<?php echo $row->id?>" > -->
+										<input class="form-control no_ktp"
+								type="text" name="no_ktp" placeholder="" required maxlength="16" data-validation="length alphanumeric" data-validation-length="16" data-validation-error-msg="Nomor KTP harus berjumlah 16 karakter" value="<?php echo $row->no_ktp?>">
+									<?php } ;?>
+								<?php endforeach;?>
+								
+							</div>
+							<div class="form-group">
+								<label>Upload KTP</label>
+								<?php  foreach($get_ktp as $row):?>
+									<?php if($row->id == $Pelanggan->ktp_id){?>
+									<input type="text" name="old_image" value="<?php echo $row->image ;?>" hidden>
+								<?php } ;?>
+								<?php endforeach;?>
+								<input class="form-control-file"
+								type="file" name="foto_ktp" placeholder="">
+								<!-- <input class="form-control-file"
+								type="file" name="foto_ktp" placeholder="" data-validation="mime size required" data-validation-allowing="jpg, png"  data-validation-error-msg-required="Tidak ada gambar yang dipilih"> -->
+							</div>
 
 							<!-- <div class="form-group">
 								<label>KTP</label>
@@ -141,7 +170,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 							<input class="btn btn-success" type="submit" name="btn" value="Save" />
 						</form>
-                        <?php } ?>           
+                        <!-- <?php } ?>            -->
 					</div>
 
 					<div class="card-footer small text-muted">

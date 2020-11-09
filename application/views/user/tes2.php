@@ -1,7 +1,8 @@
 <?php
 //INI BUAT AMBIL DATA USER DARI SESSION
 $no_indihome =  $this->session->userdata("no_indihome");
-$nilai = $this->db->query("SELECT pelanggan.id,no_indihome,no_telepon,nama_lengkap, kota_kabupaten_id,kecamatan_id,desa_kelurahan_id,alamat,kodepos_id,no_handphone,email,pekerjaan_id,ktp_id, kartu_tanda_penduduk.id,no_ktp,image FROM pelanggan JOIN kartu_tanda_penduduk ON pelanggan.ktp_id = kartu_tanda_penduduk.id WHERE no_indihome = '" . $no_indihome . "'")->result_array();
+$no_ktp =$this->session->userdata('no_ktp');
+$nilai = $this->db->query("SELECT pelanggan.id AS id_pelanggan,no_indihome,no_telepon,nama_lengkap, kota_kabupaten_id,kecamatan_id,desa_kelurahan_id,alamat,kodepos_id,no_handphone,email,pekerjaan_id,ktp_id, kartu_tanda_penduduk.id,no_ktp,image FROM pelanggan JOIN kartu_tanda_penduduk ON pelanggan.ktp_id = kartu_tanda_penduduk.id WHERE no_ktp = '" . $no_ktp . "'")->result_array();
 ?>
 
 <!doctype html>
@@ -60,7 +61,7 @@ background: radial-gradient(ellipse at center,  #d60202 1%,#5a1c1c 100%);">
                   <form method="post" id="register_form" action="<?php echo site_url('User/update_pelanggan') ?>" enctype="multipart/form-data">
                      <div id="test-form-1" role="tabpanel" class="bs-stepper-pane fade" aria-labelledby="stepperFormTrigger1">
                         <div class="form-group">
-                           <input type="text" name="id" value="<?php print_r($nilai[0]["id"]); ?>">
+                           <input type="text" name="id" hidden value="<?php print_r($nilai[0]["id_pelanggan"]); ?>">
                            <label valign="top" for="inputMailForm">Nomor Indihome <span class="text-danger font-weight-bold">*</span></label>
                            <input id="inputnoindihome" type="number" onkeypress="return hanyaAngka(event)" name="no_indihome" id="no_indihome" class="form-control no_indihome" value="<?php print_r($nilai[0]["no_indihome"]); ?>" readonly required maxlength="12" data-validation="length alphanumeric" data-validation-length="12" data-validation-error-msg="Nomor Indihome harus berjumlah 12 karakter">
                            <div class="invalid-feedback">Nomor indihome harus terdiri dari 12 angka</div>
@@ -150,10 +151,11 @@ background: radial-gradient(ellipse at center,  #d60202 1%,#5a1c1c 100%);">
                         <!-- <input class="form-control-file"
                         type="file" name="foto_ktp" placeholder="" data-validation="mime size required" data-validation-allowing="jpg, png"  data-validation-error-msg-required="Tidak ada gambar yang dipilih"> -->
                      </div>
-                        <span class="btn btn-secondary mb-3" onclick="stepperForm.previous()">Previous</span>
-                        <a id="set_dtl" class="btn btn-success mb-3"  onclick="test()" ><i class="fas fa-eye"></i>Lihat data</a>
-                        <button type="submit" class="btn btn-danger btn-next-form float-right mb-3" id="register">Submit</button> <br>
-                        <span><small class="font-weight-bold">*Jika Tombol Submit Tidak Bisa , Klik lihat data , apakah data sudah terisi semua atau belum</small> </span>
+                        <span class="btn btn-secondary" onclick="stepperForm.previous()">Previous</span>
+                        <!-- <a id="set_dtl" class="btn btn-success mb-3"  onclick="test()" ><i class="fas fa-eye"></i>Lihat data</a> -->
+                        <!-- <button type="submit" class="btn btn-danger btn-next-form float-right mb-3" id="register">Submit</button> -->
+                        <button type="button" class="btn btn-danger btn-next-form " id="submitBtn" data-toggle="modal" data-target="#confirm-submit">Submit</button> <br>
+                        <!-- <span><small class="font-weight-bold">*Jika Tombol Submit Tidak Bisa , Klik lihat data , apakah data sudah terisi semua atau belum</small> </span> -->
                      </div>
                   </form>
                </div>
@@ -162,7 +164,7 @@ background: radial-gradient(ellipse at center,  #d60202 1%,#5a1c1c 100%);">
       </div>
 
 
-      <div class="modal fade" id="modal-detail">
+      <!-- <div class="modal fade" id="modal-detail">
          <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
@@ -236,6 +238,76 @@ background: radial-gradient(ellipse at center,  #d60202 1%,#5a1c1c 100%);">
             </div>
             </div>
          </div>
+      </div> -->
+
+      <div class="modal fade" id="confirm-submit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+                  <div class="modal-header">
+                     <h4> Confirm Submit</h4>
+                  </div>
+                  <div class="modal-body">
+                     <table class="table">
+                     <tr>
+                        <th>NO. INDIHOME</th>
+                        <td><span id="no_indihome_modal"></span></td>
+                     </tr>
+                     <tr>
+                        <th>NO. TELEPON</th>
+                        <td><span id="no_telepon_modal"></span></td>
+                     </tr>
+                     <tr>
+                        <th>NAMA LENGKAP</th>
+                        <td><span id="nama_lengkap_modal"></span></td>
+                     </tr>
+                     <tr>
+                        <th>KOTA KABUPATEN</th>
+                        <td><span id="nama_kota_kabupaten_modal"></span></td>
+                     </tr>
+                     <tr>
+                        <th>KECAMATAN</th>
+                        <td><span id="nama_kecamatan_modal"></span></td>
+                     </tr>
+                     <tr>
+                        <th>DESA KELURAHAN</th>
+                        <td><span id="nama_desa_kelurahan_modal"></span></td>
+                     </tr>
+                     <tr>
+                        <th>ALAMAT</th>
+                        <td><span id="alamat_modal"></span></td>
+                     </tr>
+                     <tr>
+                        <th>KODE POS</th>
+                        <td><span id="kodepos_modal"></span></td>
+                     </tr>
+                     <tr>
+                        <th>NO. HANDPHONE</th>
+                        <td><span id="no_handphone_modal"></span></td>
+                     </tr>
+                     <tr>
+                        <th>EMAIL</th>
+                        <td><span id="email_modal"></span></td>
+                     </tr>
+                     <tr>
+                        <th>PEKERJAAN</th>
+                        <td><span id="nama_pekerjaan_modal"></span></td>
+                     </tr>
+                     <tr>
+                        <th>No KTP</th>
+                        <td><span id="no_ktp_modal"></span></td>
+                     </tr>
+                     <!-- <tr>
+                        <th>Foto KTP</th>
+                        <td><span id="image"></span></td>
+                     </tr> -->
+                     </table>
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                     <a href="#" id="submit" class="btn btn-success success">Submit</a>
+                  </div>
+            </div>
+         </div>
       </div>
 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -272,7 +344,7 @@ background: radial-gradient(ellipse at center,  #d60202 1%,#5a1c1c 100%);">
 
             var stepperPan = stepperPanList[currentStep]
 
-            if ((stepperPan.getAttribute('id') === 'test-form-1'  && !inputnama.value.length )
+            if ((stepperPan.getAttribute('id') === 'test-form-1'  && !inputnoindihome.value.length )
             || (stepperPan.getAttribute('id') === 'test-form-2' && !inputPasswordForm.value.length)) {
                event.preventDefault()
                form.classList.add('was-validated')
@@ -385,6 +457,29 @@ background: radial-gradient(ellipse at center,  #d60202 1%,#5a1c1c 100%);">
                   );
 
          }
+      </script>
+      <script>
+         $('#submitBtn').click(function() {
+            // $('#lname').text($('#lastname').val());
+            // $('#fname').text($('#firstname').val());
+            $('#no_indihome_modal').val($('.no_indihome').text());
+            $('#no_indihome_modal').text($('.no_indihome').val());
+            $('#no_telepon_modal').text($('.no_telepon').val());
+            $('#nama_lengkap_modal').text($('.nama_lengkap').val());
+            $('#nama_kota_kabupaten_modal').text($('.nama_kota_kabupaten option:selected').text());
+            $('#nama_kecamatan_modal').text($('.nama_kecamatan option:selected').text());
+            $('#nama_desa_kelurahan_modal').text($('.nama_desa_kelurahan option:selected').text());
+            $('#alamat_modal').text($('.alamat').val());
+            $('#kodepos_modal').text($('.kodepos option:selected').text());
+            $('#email_modal').text($('.email').val());
+            $('#no_handphone_modal').text($('.no_handphone').val());
+            $('#nama_pekerjaan_modal').text($('.nama_pekerjaan option:selected').text());
+            $('#no_ktp_modal').text($('.no_ktp').val());
+         });
+
+         $('#submit').click(function(){
+            $('#register_form').submit();
+         });
       </script>
       <script>
          function hanyaAngka(evt) {
