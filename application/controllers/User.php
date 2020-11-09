@@ -158,7 +158,7 @@ class User extends CI_Controller {
             'email'            => $email,
             'pekerjaan_id'        => $pekerjaan,
             'last_updated_at'	    => $date.' '.$time,
-            'status'	            => $status
+            'status'	            => $status + 1
         );
         $where = array(
             'id'      => $id
